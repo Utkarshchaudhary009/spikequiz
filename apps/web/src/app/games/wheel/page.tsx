@@ -16,23 +16,45 @@ function generateQuestion(mode: GameMode): {
   prompt: string
   targetAngle: number
   targetUnit: AngleUnit
+  displayUnit: AngleUnit
 } {
   const commonAngles = [0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330]
   const randomAngle = commonAngles[Math.floor(Math.random() * commonAngles.length)]
   const radValue = (randomAngle * Math.PI) / 180
 
+  const RADIAN_LABELS: Record<number, string> = {
+    0: '0',
+    30: 'π/6',
+    45: 'π/4',
+    60: 'π/3',
+    90: 'π/2',
+    120: '2π/3',
+    135: '3π/4',
+    150: '5π/6',
+    180: 'π',
+    210: '7π/6',
+    225: '5π/4',
+    240: '4π/3',
+    270: '3π/2',
+    300: '5π/3',
+    315: '7π/4',
+    330: '11π/6',
+  }
+
   switch (mode) {
     case 'deg-to-rad':
       return {
-        prompt: `Point to ${radValue.toFixed(4)} radians`,
+        prompt: `Point to ${RADIAN_LABELS[randomAngle] || radValue.toFixed(4)} rad`,
         targetAngle: randomAngle,
         targetUnit: 'deg',
+        displayUnit: 'rad',
       }
     case 'rad-to-deg':
       return {
         prompt: `Point to ${randomAngle}°`,
         targetAngle: randomAngle,
         targetUnit: 'deg',
+        displayUnit: 'deg',
       }
     case 'allied': {
       const baseAngle = [30, 45, 60][Math.floor(Math.random() * 3)]
@@ -49,6 +71,7 @@ function generateQuestion(mode: GameMode): {
         prompt: `Point to the allied angle of ${baseAngle}° in Q${quadrant + 1}`,
         targetAngle: alliedAngle,
         targetUnit: 'deg',
+        displayUnit: 'deg',
       }
     }
     case 'trig-ratio': {
@@ -65,6 +88,7 @@ function generateQuestion(mode: GameMode): {
         prompt: `${func}(θ) = ${values[func][angle]}. Point to θ`,
         targetAngle: angle,
         targetUnit: 'deg',
+        displayUnit: 'deg',
       }
     }
   }
@@ -135,7 +159,8 @@ export default function WheelGamePage() {
             key={question.prompt}
             targetAngle={question.targetAngle}
             targetUnit={question.targetUnit}
-            tolerance={5}
+            displayUnit={question.displayUnit}
+            tolerance={8}
             onCorrect={handleCorrect}
             size={320}
           />
