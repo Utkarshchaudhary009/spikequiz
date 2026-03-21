@@ -185,7 +185,8 @@ export function SailorsWheel({
     const rect = wheelRef.current.getBoundingClientRect()
     const centerX = rect.left + rect.width / 2
     const centerY = rect.top + rect.height / 2
-    return Math.atan2(clientY - centerY, clientX - centerX) * RAD_TO_DEG
+    // Use centerY - clientY so that the angle increases counterclockwise (standard mathematical angle)
+    return Math.atan2(centerY - clientY, clientX - centerX) * RAD_TO_DEG
   }, [])
 
   const handlePointerDown = useCallback(
