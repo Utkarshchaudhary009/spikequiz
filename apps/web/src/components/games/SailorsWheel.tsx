@@ -222,8 +222,7 @@ export function SailorsWheel({
       if (delta > 180) delta -= 360
       if (delta < -180) delta += 360
 
-      // Negate delta: screen coordinates have Y inverted, so we flip to match standard math
-      const newRotation = normalizeAngle(startRotationRef.current - delta)
+      const newRotation = normalizeAngle(startRotationRef.current + delta)
       setRotation(newRotation)
 
       const timeDelta = currentTime - lastTimeRef.current
@@ -231,7 +230,7 @@ export function SailorsWheel({
         let angleDelta = currentAngle - lastAngleRef.current
         if (angleDelta > 180) angleDelta -= 360
         if (angleDelta < -180) angleDelta += 360
-        velocityRef.current = -angleDelta / Math.max(timeDelta / 16, 1)
+        velocityRef.current = angleDelta / Math.max(timeDelta / 16, 1)
       }
 
       lastAngleRef.current = currentAngle
@@ -402,7 +401,7 @@ export function SailorsWheel({
           style={{ touchAction: 'none' }}
           aria-label="Rotatable sailor's wheel for angle selection"
         >
-          <g transform={`rotate(${displayRotation}, ${center}, ${center})`}>
+          <g transform={`rotate(${-displayRotation}, ${center}, ${center})`}>
             {/* Inner wheel background */}
             <circle cx={center} cy={center} r={innerRadius - 5} fill="#fef3c7" />
             <circle
