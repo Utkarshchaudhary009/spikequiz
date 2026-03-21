@@ -10,3 +10,4 @@ dist/
 temp
 .gemini
 TODO.md
+*.js
