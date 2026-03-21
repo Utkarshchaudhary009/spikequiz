@@ -42,4 +42,4 @@ bun test       # Run tests
 
 ## AI Provider
 
-Uses **Gemini 2.5 Flash** via `ai-sdk-provider-gemini-cli` with OAuth authentication. PDFs are sent directly as file attachments to the model.
+Uses **Gemini 3.1 Pro Preview** via `ai-sdk-provider-gemini-cli` with OAuth authentication. PDFs are sent directly as file attachments to the model.

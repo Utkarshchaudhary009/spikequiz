@@ -6,7 +6,7 @@
 
 ## Project Snapshot
 
-spikequiz is a Question extractor tool written in turborepo and bun. It take various sources like ncert pdfs, exampler pdfs, sample papers, pyqs(ALL SETS) to classify and store question for ease of access, filter and CRUD.
+spikequiz is a Duolingo style gamified learning app that uses spaced repetition and other learning techniques to help users learn and retain information.It is created for 11th and 12th student to make there memorizing part fun.
 
 This repository is a VERY EARLY WIP. Proposing sweeping changes that improve long-term maintainability is encouraged.
 
