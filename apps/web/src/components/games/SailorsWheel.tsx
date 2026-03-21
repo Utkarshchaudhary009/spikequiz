@@ -239,13 +239,6 @@ export function SailorsWheel({
   const innerRadius = outerRadius - ringWidth
   const center = size / 2
 
-  const cardinals: { angle: number; label: string }[] = [
-    { angle: 0, label: 'N' },
-    { angle: 90, label: 'E' },
-    { angle: 180, label: 'S' },
-    { angle: 270, label: 'W' },
-  ]
-
   const displayRotation = rotation + swayOffset
 
   return (
@@ -276,13 +269,16 @@ export function SailorsWheel({
             strokeWidth={ringWidth - 4}
           />
 
-          {/* Angle markings on outer ring */}
+          {/* Angle markings on outer ring - standard math position (0° at right, counterclockwise) */}
           {SNAP_ANGLES.map((deg) => {
-            const rad = (deg - 90) * DEG_TO_RAD
+            // Standard math: 0° at right (3 o'clock), angles go counterclockwise
+            // SVG: 0° at right, but positive rotation is clockwise
+            // So we negate the angle to make counterclockwise positive
+            const rad = -deg * DEG_TO_RAD
             const tickInner = outerRadius - ringWidth + 5
             const tickOuter = outerRadius - 5
             const labelR = outerRadius - ringWidth / 2
-            const isCardinal = deg % 90 === 0
+            const isQuadrant = deg % 90 === 0
 
             return (
               <g key={deg}>
@@ -291,8 +287,8 @@ export function SailorsWheel({
                   y1={center + tickInner * Math.sin(rad)}
                   x2={center + tickOuter * Math.cos(rad)}
                   y2={center + tickOuter * Math.sin(rad)}
-                  stroke={isCardinal ? '#fbbf24' : '#94a3b8'}
-                  strokeWidth={isCardinal ? 3 : 2}
+                  stroke={isQuadrant ? '#fbbf24' : '#94a3b8'}
+                  strokeWidth={isQuadrant ? 3 : 2}
                 />
                 {showLabels && (
                   <text
@@ -300,34 +296,14 @@ export function SailorsWheel({
                     y={center + labelR * Math.sin(rad)}
                     textAnchor="middle"
                     dominantBaseline="middle"
-                    fontSize={isCardinal ? 12 : 9}
-                    fill={isCardinal ? '#fbbf24' : '#cbd5e1'}
+                    fontSize={isQuadrant ? 12 : 9}
+                    fill={isQuadrant ? '#fbbf24' : '#cbd5e1'}
                     fontWeight="bold"
                   >
                     {deg}°
                   </text>
                 )}
               </g>
-            )
-          })}
-
-          {/* Cardinal directions */}
-          {cardinals.map(({ angle, label }) => {
-            const rad = (angle - 90) * DEG_TO_RAD
-            const labelR = outerRadius + 2
-            return (
-              <text
-                key={label}
-                x={center + labelR * Math.cos(rad)}
-                y={center + labelR * Math.sin(rad)}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fontSize="14"
-                fill="#fbbf24"
-                fontWeight="bold"
-              >
-                {label}
-              </text>
             )
           })}
         </svg>
@@ -345,7 +321,7 @@ export function SailorsWheel({
           style={{ touchAction: 'none' }}
           aria-label="Rotatable sailor's wheel for angle selection"
         >
-          <g transform={`rotate(${displayRotation}, ${center}, ${center})`}>
+          <g transform={`rotate(${-displayRotation}, ${center}, ${center})`}>
             {/* Inner wheel background */}
             <circle cx={center} cy={center} r={innerRadius - 5} fill="#fef3c7" />
             <circle
@@ -359,7 +335,7 @@ export function SailorsWheel({
 
             {/* Wheel spokes */}
             {spokeAngles.map((deg) => {
-              const rad = (deg - 90) * DEG_TO_RAD
+              const rad = deg * DEG_TO_RAD
               const spokeLength = innerRadius - 25
               return (
                 <line
@@ -377,7 +353,7 @@ export function SailorsWheel({
 
             {/* Spoke handles */}
             {spokeAngles.map((deg) => {
-              const rad = (deg - 90) * DEG_TO_RAD
+              const rad = deg * DEG_TO_RAD
               const handleDist = innerRadius - 30
               return (
                 <circle
@@ -403,15 +379,15 @@ export function SailorsWheel({
             />
             <circle cx={center} cy={center} r="10" fill="#78350f" />
 
-            {/* Arrow pointer on wheel (pointing up/0°) */}
+            {/* Arrow pointer on wheel (pointing right/0° in standard position) */}
             <g transform={`translate(${center}, ${center})`}>
               <polygon
-                points="0,-85 -12,-55 0,-65 12,-55"
+                points="85,0 55,-12 65,0 55,12"
                 fill="#ef4444"
                 stroke="#b91c1c"
                 strokeWidth="2"
               />
-              <circle cx="0" cy="-75" r="4" fill="#fbbf24" />
+              <circle cx="75" cy="0" r="4" fill="#fbbf24" />
             </g>
           </g>
         </svg>
