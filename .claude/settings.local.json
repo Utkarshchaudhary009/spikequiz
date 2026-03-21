@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:www.cbse.gov.in)",
+      "WebFetch(domain:cbseacademic.in)",
+      "WebFetch(domain:cbseacademic.nic.in)",
+      "Bash(bun run packages/scraper/scripts/download-sample-paper-demo.ts)",
+      "Bash(ls:*)",
+      "Bash(bun run lint)",
+      "Bash(bun run typecheck)"
+    ]
+  }
+}

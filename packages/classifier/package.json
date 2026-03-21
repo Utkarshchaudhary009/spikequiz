@@ -1,0 +1,20 @@
+{
+  "name": "@spikequiz/classifier",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@spikequiz/context": "workspace:*",
+    "@spikequiz/shared": "workspace:*",
+    "ai": "^6.0.0",
+    "ai-sdk-provider-gemini-cli": "^2.0.0",
+    "zod": "^3.24.2"
+  }
+}
