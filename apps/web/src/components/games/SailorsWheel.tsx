@@ -222,7 +222,8 @@ export function SailorsWheel({
       if (delta > 180) delta -= 360
       if (delta < -180) delta += 360
 
-      const newRotation = normalizeAngle(startRotationRef.current + delta)
+      // Negate delta: screen coordinates have Y inverted, so we flip to match standard math
+      const newRotation = normalizeAngle(startRotationRef.current - delta)
       setRotation(newRotation)
 
       const timeDelta = currentTime - lastTimeRef.current
@@ -230,7 +231,7 @@ export function SailorsWheel({
         let angleDelta = currentAngle - lastAngleRef.current
         if (angleDelta > 180) angleDelta -= 360
         if (angleDelta < -180) angleDelta += 360
-        velocityRef.current = angleDelta / Math.max(timeDelta / 16, 1)
+        velocityRef.current = -angleDelta / Math.max(timeDelta / 16, 1)
       }
 
       lastAngleRef.current = currentAngle
@@ -386,26 +387,6 @@ export function SailorsWheel({
               </g>
             )
           })}
-
-          {/* Highlight arc showing tolerance zone when near snap */}
-          {isNearSnap && nearestSnapInfo && (
-            <circle
-              cx={center}
-              cy={center}
-              r={outerRadius - ringWidth / 2}
-              fill="none"
-              stroke="#22c55e"
-              strokeWidth={ringWidth - 8}
-              strokeDasharray={`${(tolerance * 2 * Math.PI * (outerRadius - ringWidth / 2)) / 360} ${((360 - tolerance * 2) * Math.PI * (outerRadius - ringWidth / 2)) / 360}`}
-              strokeDashoffset={
-                ((90 + nearestSnapInfo.snap + tolerance) *
-                  Math.PI *
-                  (outerRadius - ringWidth / 2)) /
-                180
-              }
-              opacity={0.3}
-            />
-          )}
         </svg>
 
         {/* Rotatable wheel */}
@@ -421,22 +402,7 @@ export function SailorsWheel({
           style={{ touchAction: 'none' }}
           aria-label="Rotatable sailor's wheel for angle selection"
         >
-          <defs>
-            <linearGradient id="laserGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#ef4444" stopOpacity="0.3" />
-              <stop offset="70%" stopColor="#ef4444" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#fbbf24" stopOpacity="1" />
-            </linearGradient>
-            <filter id="laserGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="2" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-
-          <g transform={`rotate(${-displayRotation}, ${center}, ${center})`}>
+          <g transform={`rotate(${displayRotation}, ${center}, ${center})`}>
             {/* Inner wheel background */}
             <circle cx={center} cy={center} r={innerRadius - 5} fill="#fef3c7" />
             <circle
@@ -494,26 +460,15 @@ export function SailorsWheel({
             />
             <circle cx={center} cy={center} r="10" fill="#78350f" />
 
-            {/* Laser line indicator pointing right (0°) */}
-            <g filter="url(#laserGlow)">
-              <line
-                x1={center + 15}
-                y1={center}
-                x2={center + innerRadius - 8}
-                y2={center}
-                stroke="url(#laserGradient)"
-                strokeWidth="4"
-                strokeLinecap="round"
+            {/* Arrow pointer pointing right (0° in standard position) */}
+            <g transform={`translate(${center}, ${center})`}>
+              <polygon
+                points="90,0 60,-14 68,0 60,14"
+                fill="#ef4444"
+                stroke="#b91c1c"
+                strokeWidth="2"
               />
-              {/* Glowing tip */}
-              <circle
-                cx={center + innerRadius - 5}
-                cy={center}
-                r="6"
-                fill="#fbbf24"
-                filter="url(#laserGlow)"
-              />
-              <circle cx={center + innerRadius - 5} cy={center} r="3" fill="#fff" />
+              <circle cx="78" cy="0" r="5" fill="#fbbf24" />
             </g>
           </g>
         </svg>
