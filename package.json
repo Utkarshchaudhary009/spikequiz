@@ -14,7 +14,9 @@
     "lint:fix": "biome check --write .",
     "fmt": "biome format --write .",
     "typecheck": "turbo run typecheck",
-    "glm": "ollama launch claude --model glm-5:cloud"
+    "glm": "ollama launch claude --model glm-5:cloud",
+    "pr": "bun scripts/fetch-pr-review.ts",
+    "logs:deployment": "bash scripts/deployment-logs.sh"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.7",
