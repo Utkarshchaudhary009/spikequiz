@@ -134,12 +134,13 @@ export function Astrolabe({
   const frameRef = useRef<number | null>(null)
 
   // Level Definition State
-  const [{ inner: innerNodes, outer: outerNodes }, setNodes] = useState<{ inner: NodeData[]; outer: NodeData[] }>(
-    {
-      inner: [],
-      outer: [],
-    },
-  )
+  const [{ inner: innerNodes, outer: outerNodes }, setNodes] = useState<{
+    inner: NodeData[]
+    outer: NodeData[]
+  }>({
+    inner: [],
+    outer: [],
+  })
 
   // Gameplay State
   const [lockedConnections, setLockedConnections] = useState<Connection[]>([])

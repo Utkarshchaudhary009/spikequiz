@@ -57,9 +57,22 @@ LIST_STATE=""
 if [ -z "$DEPLOYMENT_URL" ]; then
   info "No URL supplied — fetching latest deployment from Vercel..."
 
+  # Detective methodology: detect project from .vercel/project.json if possible
+  PROJECT_NAME=""
+  if [ -f ".vercel/project.json" ]; then
+    PROJECT_NAME=$(parse_json_field "$(cat .vercel/project.json)" "projectName")
+    if [ -n "$PROJECT_NAME" ]; then
+      info "Detected Vercel project: ${PROJECT_NAME}"
+    fi
+  fi
+
   # Capture stdout; suppress stderr preamble ("Vercel CLI x.x / Retrieving project…").
   # `tr -d '\r'` strips Windows CRLF so grep/sed work correctly in Git Bash.
-  RAW_LIST=$(vercel list -F json 2>/dev/null | tr -d '\r')
+  if [ -n "$PROJECT_NAME" ]; then
+    RAW_LIST=$(vercel list "$PROJECT_NAME" -F json 2>/dev/null | tr -d '\r')
+  else
+    RAW_LIST=$(vercel list -F json 2>/dev/null | tr -d '\r')
+  fi
   LIST_EXIT=${PIPESTATUS[0]}
 
   if [ "$LIST_EXIT" -ne 0 ] || [ -z "$RAW_LIST" ]; then
@@ -162,3 +175,4 @@ case "$STATE" in
     ;;
 
 esac
+
