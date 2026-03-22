@@ -11,3 +11,10 @@ temp
 .gemini
 TODO.md
 *.js
+.vercel
+.env*.local
+
+# Turborepo
+.turbo
+packages/video/build/
+*.txt

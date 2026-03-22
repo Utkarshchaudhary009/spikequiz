@@ -134,7 +134,7 @@ export function Astrolabe({
   const frameRef = useRef<number | null>(null)
 
   // Level Definition State
-  const [{ innerNodes, outerNodes }, setNodes] = useState<{ inner: NodeData[]; outer: NodeData[] }>(
+  const [{ inner: innerNodes, outer: outerNodes }, setNodes] = useState<{ inner: NodeData[]; outer: NodeData[] }>(
     {
       inner: [],
       outer: [],
