@@ -15,6 +15,7 @@
       "name": "web",
       "version": "0.1.0",
       "dependencies": {
+        "@spikequiz/character-creator": "workspace:*",
         "geist": "^1.7.0",
         "lucide-react": "^0.577.0",
         "next": "^16.2.1",
@@ -30,6 +31,10 @@
         "tailwindcss": "^4.2.2",
         "typescript": "^5.9.3",
       },
+    },
+    "packages/character-creator": {
+      "name": "@spikequiz/character-creator",
+      "version": "0.0.1",
     },
     "packages/classifier": {
       "name": "@spikequiz/classifier",
@@ -549,6 +554,8 @@
     "@sindresorhus/is": ["@sindresorhus/is@7.2.0", "", {}, "sha512-P1Cz1dWaFfR4IR+U13mqqiGsLFf1KbayybWwdd2vfctdV6hDpUkgCY0nKOLLTMSoRd/jJNjtbqzf13K8DCCXQw=="],
 
     "@sindresorhus/merge-streams": ["@sindresorhus/merge-streams@4.0.0", "", {}, "sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ=="],
+
+    "@spikequiz/character-creator": ["@spikequiz/character-creator@workspace:packages/character-creator"],
 
     "@spikequiz/classifier": ["@spikequiz/classifier@workspace:packages/classifier"],
 
