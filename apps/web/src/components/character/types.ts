@@ -1,21 +1,14 @@
-export interface CharacterConfig {
-  bodyShape: 'round' | 'square' | 'oval';
-  hairStyle: 'none' | 'spiky' | 'wavy' | 'bob';
-  eyeStyle: 'normal' | 'happy' | 'tired';
-  mouthStyle: 'smile' | 'neutral' | 'open';
-  accessory: 'none' | 'glasses' | 'headband';
-  skinColor: string;
-  hairColor: string;
-  eyeColor: string;
-}
+export type {
+  CharacterConfig,
+  FaceShape,
+  EyeStyle,
+  HairStyle,
+  FacialHairStyle,
+  MouthStyle,
+  NoseStyle,
+  EyebrowStyle,
+  BodyType,
+  AccessoryType,
+} from "@spikequiz/character-creator/types";
 
-export const DEFAULT_CHARACTER: CharacterConfig = {
-  bodyShape: 'round',
-  hairStyle: 'spiky',
-  eyeStyle: 'normal',
-  mouthStyle: 'smile',
-  accessory: 'none',
-  skinColor: '#FFD1B3',
-  hairColor: '#4A3B32',
-  eyeColor: '#1A1A1A',
-};
+export { DEFAULT_CHARACTER } from "@spikequiz/character-creator/constants";

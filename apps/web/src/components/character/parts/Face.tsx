@@ -1,76 +1,84 @@
-import type { CharacterConfig } from '../types';
+import { CANVAS } from '@spikequiz/character-creator/constants'
+import type { FaceShape } from '@spikequiz/character-creator/types'
 
-export function Face({ config }: { config: CharacterConfig }) {
-  const { eyeStyle, eyeColor, mouthStyle, bodyShape } = config;
+export interface FaceProps {
+  shape: FaceShape
+  skinTone: string
+}
 
-  // Adjust face position slightly based on body shape
-  const getOffsetY = () => {
-    if (bodyShape === 'square') return -5;
-    if (bodyShape === 'oval') return 5;
-    return 0;
-  };
-  const offsetY = getOffsetY();
+export function Face({ shape, skinTone }: FaceProps) {
+  const cx = CANVAS.centerX
+  const cy = CANVAS.headY
+  const blushColor = '#FF8A8A'
+  const blushOpacity = 0.35
 
-  const renderEyes = () => {
-    switch (eyeStyle) {
-      case 'happy':
+  const renderFaceShape = () => {
+    switch (shape) {
+      case 'oval':
+        return <ellipse cx={cx} cy={cy} rx={42} ry={50} fill={skinTone} />
+
+      case 'square':
         return (
-          <g id="eyes-happy">
-            <path d="M 70 100 Q 80 85 90 100" fill="none" stroke={eyeColor} strokeWidth="4" strokeLinecap="round" />
-            <path d="M 110 100 Q 120 85 130 100" fill="none" stroke={eyeColor} strokeWidth="4" strokeLinecap="round" />
-          </g>
-        );
-      case 'tired':
-        return (
-          <g id="eyes-tired">
-            <line x1="70" y1="95" x2="90" y2="95" stroke={eyeColor} strokeWidth="4" strokeLinecap="round" />
-            <path d="M 70 100 Q 80 110 90 100" fill="none" stroke={eyeColor} strokeWidth="2" opacity="0.3" />
-            <line x1="110" y1="95" x2="130" y2="95" stroke={eyeColor} strokeWidth="4" strokeLinecap="round" />
-            <path d="M 110 100 Q 120 110 130 100" fill="none" stroke={eyeColor} strokeWidth="2" opacity="0.3" />
-          </g>
-        );
-      case 'normal':
-      default:
-        return (
-          <g id="eyes-normal">
-            <circle cx="80" cy="95" r="6" fill={eyeColor} />
-            <circle cx="120" cy="95" r="6" fill={eyeColor} />
-          </g>
-        );
-    }
-  };
+          <rect x={cx - 40} y={cy - 45} width={80} height={85} rx={18} ry={18} fill={skinTone} />
+        )
 
-  const renderMouth = () => {
-    switch (mouthStyle) {
-      case 'neutral':
-        return <line x1="85" y1="120" x2="115" y2="120" stroke="#4A3B32" strokeWidth="4" strokeLinecap="round" />;
-      case 'open':
-        return <ellipse cx="100" cy="120" rx="10" ry="12" fill="#4A3B32" />;
-      case 'smile':
-      default:
+      case 'heart':
         return (
           <path
-            d="M 85 115 Q 95 135 118 112"
-            fill="none"
-            stroke="#4A3B32"
-            strokeWidth="4"
-            strokeLinecap="round"
+            d={`
+              M ${cx} ${cy + 50}
+              Q ${cx - 35} ${cy + 20} ${cx - 42} ${cy - 10}
+              Q ${cx - 44} ${cy - 40} ${cx - 20} ${cy - 45}
+              Q ${cx} ${cy - 48} ${cx} ${cy - 35}
+              Q ${cx} ${cy - 48} ${cx + 20} ${cy - 45}
+              Q ${cx + 44} ${cy - 40} ${cx + 42} ${cy - 10}
+              Q ${cx + 35} ${cy + 20} ${cx} ${cy + 50}
+              Z
+            `}
+            fill={skinTone}
           />
-        );
+        )
+
+      default:
+        return <circle cx={cx} cy={cy} r={46} fill={skinTone} />
     }
-  };
+  }
+
+  const getBlushPositions = () => {
+    switch (shape) {
+      case 'oval':
+        return { leftX: cx - 32, rightX: cx + 32, y: cy + 15 }
+      case 'square':
+        return { leftX: cx - 28, rightX: cx + 28, y: cy + 12 }
+      case 'heart':
+        return { leftX: cx - 30, rightX: cx + 30, y: cy + 5 }
+      default:
+        return { leftX: cx - 34, rightX: cx + 34, y: cy + 12 }
+    }
+  }
+
+  const blushPos = getBlushPositions()
 
   return (
-    <g id="face" transform={`translate(0, ${offsetY})`}>
-      {/* Cheeks */}
-      <circle cx="65" cy="110" r="8" fill="#FF8A8A" opacity="0.4" />
-      <circle cx="135" cy="110" r="8" fill="#FF8A8A" opacity="0.4" />
-      
-      {/* Nose (Geometric rounded rectangle per Duolingo guidelines) */}
-      <rect x="94" y="98" width="12" height="16" rx="6" fill="none" stroke="#D19E82" strokeWidth="3" opacity="0.7" />
+    <g id="face">
+      {renderFaceShape()}
 
-      {renderEyes()}
-      {renderMouth()}
+      <ellipse
+        cx={blushPos.leftX}
+        cy={blushPos.y}
+        rx={10}
+        ry={6}
+        fill={blushColor}
+        opacity={blushOpacity}
+      />
+      <ellipse
+        cx={blushPos.rightX}
+        cy={blushPos.y}
+        rx={10}
+        ry={6}
+        fill={blushColor}
+        opacity={blushOpacity}
+      />
     </g>
-  );
+  )
 }

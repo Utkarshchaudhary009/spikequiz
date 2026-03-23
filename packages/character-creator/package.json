@@ -1,0 +1,16 @@
+{
+  "name": "@spikequiz/character-creator",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./types": "./src/types.ts",
+    "./constants": "./src/constants.ts",
+    "./utils": "./src/utils.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "bun test"
+  }
+}
