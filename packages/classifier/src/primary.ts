@@ -15,7 +15,9 @@ export interface PrimaryClassifierInput {
   syllabus: SubjectSyllabus
 }
 
-export async function classifyPrimary(input: PrimaryClassifierInput): Promise<PrimaryClassifierOutput> {
+export async function classifyPrimary(
+  input: PrimaryClassifierInput,
+): Promise<PrimaryClassifierOutput> {
   const chapterList = input.syllabus.chapters
     .map((c) => `${c.chapter_no}. ${c.chapter_name}`)
     .join('\n')

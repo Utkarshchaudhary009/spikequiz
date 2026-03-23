@@ -7,7 +7,7 @@ import type { Subject, ClassLevel, SubjectSyllabus, Chapter } from '@spikequiz/s
 async function runClassifier() {
   const tempDir = join(process.cwd(), '../../temp')
   let files: string[] = []
-  
+
   try {
     files = (await readdir(tempDir)).filter((f) => f.endsWith('.pdf'))
   } catch (error) {
@@ -30,20 +30,34 @@ async function runClassifier() {
     subject: 'science' as Subject,
     class: 10 as ClassLevel,
     chapters: [
-      { 
-        chapter_no: 1, 
-        chapter_name: 'Chemical Reactions and Equations', 
-        topics: ['Chemical Equations', 'Balanced Chemical Equations', 'Types of Chemical Reactions', 'Oxidation and Reduction'] 
+      {
+        chapter_no: 1,
+        chapter_name: 'Chemical Reactions and Equations',
+        topics: [
+          'Chemical Equations',
+          'Balanced Chemical Equations',
+          'Types of Chemical Reactions',
+          'Oxidation and Reduction',
+        ],
       },
-      { 
-        chapter_no: 2, 
-        chapter_name: 'Acids, Bases and Salts', 
-        topics: ['Chemical Properties of Acids and Bases', 'Strength of Acid/Base Solutions', 'Salts'] 
+      {
+        chapter_no: 2,
+        chapter_name: 'Acids, Bases and Salts',
+        topics: [
+          'Chemical Properties of Acids and Bases',
+          'Strength of Acid/Base Solutions',
+          'Salts',
+        ],
       },
-      { 
-        chapter_no: 3, 
-        chapter_name: 'Metals and Non-metals', 
-        topics: ['Physical Properties', 'Chemical Properties of Metals', 'Reactivity Series', 'Ionic Compounds'] 
+      {
+        chapter_no: 3,
+        chapter_name: 'Metals and Non-metals',
+        topics: [
+          'Physical Properties',
+          'Chemical Properties of Metals',
+          'Reactivity Series',
+          'Ionic Compounds',
+        ],
       },
     ],
   }
@@ -68,11 +82,12 @@ async function runClassifier() {
 
     const finalResults = []
 
-    for (const question of primaryResult.questions.slice(0, 3)) { // Limit to 3 for testing
+    for (const question of primaryResult.questions.slice(0, 3)) {
+      // Limit to 3 for testing
       console.log(`\nClassifying Question: "${question.question_text.substring(0, 50)}..."`)
-      
-      const chapter = mockSyllabus.chapters.find(c => c.chapter_no === question.chapter_no)
-      
+
+      const chapter = mockSyllabus.chapters.find((c) => c.chapter_no === question.chapter_no)
+
       if (!chapter) {
         console.warn(`Warning: Could not find chapter ${question.chapter_no} in syllabus.`)
         finalResults.push({ ...question, secondary: null })
@@ -82,12 +97,12 @@ async function runClassifier() {
       try {
         const secondaryResult = await classifySecondary({
           questionText: question.question_text,
-          chapter: chapter
+          chapter: chapter,
         })
-        
+
         finalResults.push({
           ...question,
-          secondary: secondaryResult
+          secondary: secondaryResult,
         })
       } catch (secError) {
         console.error(`Error in secondary classification for question:`, secError)

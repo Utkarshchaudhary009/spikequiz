@@ -1,20 +1,16 @@
-"use client";
+'use client'
 
-import type { CharacterConfig } from "@spikequiz/character-creator/types";
-import { CANVAS } from "@spikequiz/character-creator/constants";
-import { Body, Eyebrows, Eyes, Face, Hair, Mouth, Nose } from "./parts";
+import type { CharacterConfig } from '@spikequiz/character-creator/types'
+import { CANVAS } from '@spikequiz/character-creator/constants'
+import { Body, Eyebrows, Eyes, Face, Hair, Mouth, Nose } from './parts'
 
 interface Props {
-  config: CharacterConfig;
-  className?: string;
-  animated?: boolean;
+  config: CharacterConfig
+  className?: string
+  animated?: boolean
 }
 
-export function CharacterCanvas({
-  config,
-  className = "",
-  animated = true,
-}: Props) {
+export function CharacterCanvas({ config, className = '', animated = true }: Props) {
   return (
     <div
       className={`relative w-full aspect-[200/240] flex items-center justify-center ${className}`}
@@ -25,12 +21,12 @@ export function CharacterCanvas({
         xmlns="http://www.w3.org/2000/svg"
         role="img"
         aria-label="Character avatar"
-        className={`w-full h-full max-w-[400px] max-h-[480px] drop-shadow-md transition-all duration-300 ease-in-out ${animated ? "animate-breathe" : ""}`}
+        className={`w-full h-full max-w-[400px] max-h-[480px] drop-shadow-md transition-all duration-300 ease-in-out ${animated ? 'animate-breathe' : ''}`}
         style={
           animated
             ? {
-                animation: "breathe 3s ease-in-out infinite",
-                transformOrigin: "center bottom",
+                animation: 'breathe 3s ease-in-out infinite',
+                transformOrigin: 'center bottom',
               }
             : undefined
         }
@@ -44,10 +40,7 @@ export function CharacterCanvas({
         <Hair {...config.hair} />
         <Nose style={config.nose.style} skinTone={config.face.skinTone} />
         <Eyes {...config.eyes} />
-        <Eyebrows
-          style={config.eyebrows.style}
-          color={config.eyebrows.color}
-        />
+        <Eyebrows style={config.eyebrows.style} color={config.eyebrows.color} />
         <Mouth style={config.mouth.style} />
       </svg>
       <style>
@@ -59,5 +52,5 @@ export function CharacterCanvas({
         `}
       </style>
     </div>
-  );
+  )
 }

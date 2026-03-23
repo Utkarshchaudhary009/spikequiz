@@ -1,7 +1,7 @@
-export { Face, type FaceProps } from "./Face";
-export { Eyes, type EyesProps } from "./Eyes";
-export { Hair, type HairProps } from "./Hair";
-export { Body, type BodyProps } from "./Body";
-export { Mouth, type MouthProps } from "./Mouth";
-export { Nose, type NoseProps } from "./Nose";
-export { Eyebrows, type EyebrowsProps } from "./Eyebrows";
+export { Face, type FaceProps } from './Face'
+export { Eyes, type EyesProps } from './Eyes'
+export { Hair, type HairProps } from './Hair'
+export { Body, type BodyProps } from './Body'
+export { Mouth, type MouthProps } from './Mouth'
+export { Nose, type NoseProps } from './Nose'
+export { Eyebrows, type EyebrowsProps } from './Eyebrows'

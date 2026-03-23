@@ -1,10 +1,10 @@
-import { CANVAS } from "@spikequiz/character-creator/constants";
-import type { BodyType } from "@spikequiz/character-creator/types";
+import { CANVAS } from '@spikequiz/character-creator/constants'
+import type { BodyType } from '@spikequiz/character-creator/types'
 
 export interface BodyProps {
-  type: BodyType;
-  clothingColor: string;
-  skinTone: string;
+  type: BodyType
+  clothingColor: string
+  skinTone: string
 }
 
 export function Body({ type, clothingColor, skinTone }: BodyProps) {

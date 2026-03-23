@@ -1,48 +1,45 @@
-import { ThreeCanvas } from "@remotion/three";
-import { zColor } from "@remotion/zod-types";
-import React, { useMemo } from "react";
-import { AbsoluteFill, useVideoConfig } from "remotion";
-import { z } from "zod";
-import { MediabunnyMetadata } from "./helpers/get-media-metadata";
-import { getPhoneLayout } from "./helpers/layout";
-import { Phone } from "./Phone";
+import { ThreeCanvas } from '@remotion/three'
+import { zColor } from '@remotion/zod-types'
+import React, { useMemo } from 'react'
+import { AbsoluteFill, useVideoConfig } from 'remotion'
+import { z } from 'zod'
+import { MediabunnyMetadata } from './helpers/get-media-metadata'
+import { getPhoneLayout } from './helpers/layout'
+import { Phone } from './Phone'
 
 const container: React.CSSProperties = {
-  backgroundColor: "white",
-};
+  backgroundColor: 'white',
+}
 
 export const myCompSchema = z.object({
   phoneColor: zColor(),
-  deviceType: z.enum(["phone", "tablet"]),
-});
+  deviceType: z.enum(['phone', 'tablet']),
+})
 
-type MyCompSchemaType = z.infer<typeof myCompSchema>;
+type MyCompSchemaType = z.infer<typeof myCompSchema>
 
 export const Scene: React.FC<
   {
-    readonly baseScale: number;
-    mediaMetadata: MediabunnyMetadata | null;
-    videoSrc: string | null;
+    readonly baseScale: number
+    mediaMetadata: MediabunnyMetadata | null
+    videoSrc: string | null
   } & MyCompSchemaType
 > = ({ baseScale, phoneColor, mediaMetadata, videoSrc }) => {
-  const { width, height } = useVideoConfig();
+  const { width, height } = useVideoConfig()
 
   if (!mediaMetadata) {
-    throw new Error("Media metadata is not available");
+    throw new Error('Media metadata is not available')
   }
   if (!videoSrc) {
-    throw new Error("Video source is not available");
+    throw new Error('Video source is not available')
   }
 
   const aspectRatio = useMemo(
     () => mediaMetadata.dimensions.width / mediaMetadata.dimensions.height,
     [mediaMetadata.dimensions.width, mediaMetadata.dimensions.height],
-  );
+  )
 
-  const layout = useMemo(
-    () => getPhoneLayout(aspectRatio, baseScale),
-    [aspectRatio, baseScale],
-  );
+  const layout = useMemo(() => getPhoneLayout(aspectRatio, baseScale), [aspectRatio, baseScale])
 
   return (
     <AbsoluteFill style={container}>
@@ -57,5 +54,5 @@ export const Scene: React.FC<
         />
       </ThreeCanvas>
     </AbsoluteFill>
-  );
-};
+  )
+}

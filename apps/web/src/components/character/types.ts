@@ -9,6 +9,6 @@ export type {
   EyebrowStyle,
   BodyType,
   AccessoryType,
-} from "@spikequiz/character-creator/types";
+} from '@spikequiz/character-creator/types'
 
-export { DEFAULT_CHARACTER } from "@spikequiz/character-creator/constants";
+export { DEFAULT_CHARACTER } from '@spikequiz/character-creator/constants'

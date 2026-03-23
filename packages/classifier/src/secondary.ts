@@ -8,7 +8,9 @@ export interface SecondaryClassifierInput {
   chapter: Chapter
 }
 
-export async function classifySecondary(input: SecondaryClassifierInput): Promise<SecondaryClassifierOutput> {
+export async function classifySecondary(
+  input: SecondaryClassifierInput,
+): Promise<SecondaryClassifierOutput> {
   const topicList = input.chapter.topics.map((t, i) => `${i + 1}. ${t}`).join('\n')
 
   const { output } = await generateText({

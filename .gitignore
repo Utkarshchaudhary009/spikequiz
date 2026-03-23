@@ -18,3 +18,4 @@ TODO.md
 .turbo
 packages/video/build/
 *.txt
+apps\web\src\app\character

@@ -1,4 +1,4 @@
-import { ALL_FORMATS, Input, UrlSource } from "mediabunny";
+import { ALL_FORMATS, Input, UrlSource } from 'mediabunny'
 
 export const getMediaMetadata = async (src: string) => {
   const input = new Input({
@@ -6,25 +6,25 @@ export const getMediaMetadata = async (src: string) => {
     source: new UrlSource(src, {
       getRetryDelay: () => null,
     }),
-  });
+  })
 
-  const durationInSeconds = await input.computeDuration();
-  const videoTrack = await input.getPrimaryVideoTrack();
+  const durationInSeconds = await input.computeDuration()
+  const videoTrack = await input.getPrimaryVideoTrack()
   if (!videoTrack) {
-    throw new Error(`Video track not found in source: ${src}`);
+    throw new Error(`Video track not found in source: ${src}`)
   }
   const dimensions = {
     width: videoTrack.displayWidth,
     height: videoTrack.displayHeight,
-  };
-  const packetStats = await videoTrack.computePacketStats(50);
-  const fps = packetStats?.averagePacketRate ?? null;
+  }
+  const packetStats = await videoTrack.computePacketStats(50)
+  const fps = packetStats?.averagePacketRate ?? null
 
   return {
     durationInSeconds,
     dimensions,
     fps,
-  };
-};
+  }
+}
 
-export type MediabunnyMetadata = Awaited<ReturnType<typeof getMediaMetadata>>;
+export type MediabunnyMetadata = Awaited<ReturnType<typeof getMediaMetadata>>

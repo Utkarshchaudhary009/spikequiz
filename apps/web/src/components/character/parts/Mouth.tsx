@@ -1,20 +1,20 @@
-import type { MouthStyle } from "@spikequiz/character-creator/types";
-import { CANVAS } from "@spikequiz/character-creator/constants";
+import type { MouthStyle } from '@spikequiz/character-creator/types'
+import { CANVAS } from '@spikequiz/character-creator/constants'
 
 export interface MouthProps {
-  style: MouthStyle;
+  style: MouthStyle
 }
 
 export function Mouth({ style }: MouthProps) {
-  const cx = CANVAS.centerX;
-  const cy = CANVAS.headY;
+  const cx = CANVAS.centerX
+  const cy = CANVAS.headY
 
-  const mouthY = cy + 20;
-  const mouthColor = "#4A3B32";
-  const tongueColor = "#FF8A8A";
+  const mouthY = cy + 20
+  const mouthColor = '#4A3B32'
+  const tongueColor = '#FF8A8A'
 
   switch (style) {
-    case "grin":
+    case 'grin':
       return (
         <g id="mouth-grin">
           <path
@@ -27,18 +27,11 @@ export function Mouth({ style }: MouthProps) {
             strokeWidth={4}
             strokeLinecap="round"
           />
-          <ellipse
-            cx={cx + 2}
-            cy={mouthY + 8}
-            rx={12}
-            ry={8}
-            fill="white"
-            opacity={0.9}
-          />
+          <ellipse cx={cx + 2} cy={mouthY + 8} rx={12} ry={8} fill="white" opacity={0.9} />
         </g>
-      );
+      )
 
-    case "neutral":
+    case 'neutral':
       return (
         <g id="mouth-neutral">
           <path
@@ -49,22 +42,16 @@ export function Mouth({ style }: MouthProps) {
             strokeLinecap="round"
           />
         </g>
-      );
+      )
 
-    case "surprised":
+    case 'surprised':
       return (
         <g id="mouth-surprised">
-          <ellipse
-            cx={cx + 2}
-            cy={mouthY + 5}
-            rx={10}
-            ry={14}
-            fill={mouthColor}
-          />
+          <ellipse cx={cx + 2} cy={mouthY + 5} rx={10} ry={14} fill={mouthColor} />
         </g>
-      );
+      )
 
-    case "sad":
+    case 'sad':
       return (
         <g id="mouth-sad">
           <path
@@ -78,9 +65,9 @@ export function Mouth({ style }: MouthProps) {
             strokeLinecap="round"
           />
         </g>
-      );
+      )
 
-    case "tongue":
+    case 'tongue':
       return (
         <g id="mouth-tongue">
           <path
@@ -93,15 +80,9 @@ export function Mouth({ style }: MouthProps) {
             strokeWidth={4}
             strokeLinecap="round"
           />
-          <ellipse
-            cx={cx + 5}
-            cy={mouthY + 12}
-            rx={8}
-            ry={10}
-            fill={tongueColor}
-          />
+          <ellipse cx={cx + 5} cy={mouthY + 12} rx={8} ry={10} fill={tongueColor} />
         </g>
-      );
+      )
 
     default:
       return (
@@ -117,6 +98,6 @@ export function Mouth({ style }: MouthProps) {
             strokeLinecap="round"
           />
         </g>
-      );
+      )
   }
 }
